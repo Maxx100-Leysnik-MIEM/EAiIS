@@ -1,0 +1,6 @@
+#NFC tag's settings
+KEY = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
+BLOCK_ADDRS = [8, 9, 10]
+  
+
+#GPIO PINS
