@@ -6,7 +6,6 @@ s.bind(("localhost", 1337))
 
 if __name__ == "__main__":
     # db_session.global_init("data/log.db")
-
     s.listen()
     conn, addr = s.accept()
     print(f"Connected by {addr}")

@@ -23,8 +23,8 @@ def data_to_bytes(lst):
 def request():
     time.sleep(2)
     # get data
-    data = [12, "123", "get"]  # id (int), equipment (str), get/give
-    return data
+    req = [12, "123", "get"]  # id (int), equipment (str), get/give
+    return req
 
 
 while True:

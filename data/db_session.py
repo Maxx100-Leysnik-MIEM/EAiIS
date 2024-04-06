@@ -33,7 +33,6 @@ def create_session() -> Session:
 
 class Event(SqlAlchemyBase):
     __tablename__ = 'log'
-
     time = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
     date = sqlalchemy.Column(sqlalchemy.Integer)
     id = sqlalchemy.Column(sqlalchemy.Integer)
