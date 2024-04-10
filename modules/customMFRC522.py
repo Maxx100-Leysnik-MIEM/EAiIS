@@ -1,6 +1,6 @@
 # Code by Simon Monk https://github.com/simonmonk/
 
-from . import MFRC522
+from mfrc522 import MFRC522
 import RPi.GPIO as GPIO
   
 class CustomMFRC522:
@@ -14,10 +14,7 @@ class CustomMFRC522:
     self.READER = MFRC522()
     self.KEY = KEY
     self.BLOCK_ADDRS = BLOCK_ADDRS
-  
-  def __init__(self):
-    self.READER = MFRC522()
-    
+
   def read(self):
       id, text = self.read_no_block()
       while not id:

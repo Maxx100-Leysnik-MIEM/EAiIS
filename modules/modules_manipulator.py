@@ -10,11 +10,17 @@ import config
 #TODO create custom MFRC522: exit while reading
 def readNFC():
     try:
+        print("Start")
         reader = CustomMFRC522(config.KEY, config.BLOCK_ADDRS)
         id, text = reader.read()
+        print("id:", id, "txt:", text)
+        reader.READER.spi.close()
+        return id, text
     except KeyboardInterrupt:
+        reader.READER.spi.close()
         GPIO.cleanup()
         raise
+        
 
 def scanBarcode():
     scanner = BarcodeScanner("COM3")
@@ -24,13 +30,10 @@ def scanBarcode():
     return res[-1]
 
 def readRFID():
-    reader = rdm6300.Reader('/dev/serial0') #/dev/serial0 or /dev/ttyS0
+    reader = rdm6300.Reader('/dev/serial0') #/dev/serial0 or /dev/tty0
     print("Please insert an RFID card")
     while True:
         card = reader.read()
         if card:
             print(f"[{card.value}] read card {card}")
             return card
-
-
-
