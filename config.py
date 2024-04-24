@@ -4,3 +4,7 @@ BLOCK_ADDRS = [8, 9, 10]
   
 
 #GPIO PINS
+
+#FLASK
+HOST = "localhost"
+PORT = 8080

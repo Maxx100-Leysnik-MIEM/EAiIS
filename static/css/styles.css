@@ -1,0 +1,101 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(43, 43, 43);
+    color:rgb(210, 208, 208);
+}
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 520px;
+}
+.wrapper *{
+    margin: 5px;
+}
+.wrapper .title{
+    border-bottom: 1px solid;
+    margin-bottom: 20px;
+}
+.title span{
+    color:rgb(139, 139, 139);
+}
+.title h1{
+    color: rgb(251, 241, 229);
+}
+.wrapper .button{
+}
+.wrapper .rbutton a{
+    display: inline-block;
+    border-radius: 10px;
+    min-width: 300px;
+    min-height: 40px;
+    font-size: 18px;
+    text-align: center;
+    vertical-align:middle;
+    line-height: 40px;
+    background-color: aquamarine;
+    transition: 0.2s all;
+    font-style: normal;
+    color:rgb(0, 0, 0);
+    text-decoration: none;
+}
+.wrapper .rbutton a:hover{
+    background-color: rgb(58, 197, 151);
+}
+.wrapper .rbutton a:checked{
+    color:black;
+}
+.check-container{
+    align-self: flex-start;
+}
+.check-elem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px;
+}
+.img-container{
+    padding: 0;
+    margin: 0;
+}
+.check-elem button, .confirm-btn button{
+    border: none;
+    border-radius: 10px;
+    height:35px;
+    width:300px;
+    background-color: aquamarine;
+    transition: 0.2s all;
+    text-align: center;
+}
+.check-elem button{
+    display:  flex;
+    align-items: center;
+    justify-content: center;
+}
+.check-elem button:hover{
+    background-color: rgb(58, 197, 151);
+}
+.check-elem button *{
+    margin-left:2px;
+    margin-right:2px;
+}
+.confirm-btn button{
+    background-color: rgb(0, 255, 132);
+    vertical-align: middle;
+}
+.confirm-btn button:hover{
+    background-color: rgb(3, 186, 98);
+}
+.img-container img{
+    height: 30px;
+    margin: 0;
+}
+.good, .waiting, .error{
+    display: none;
+}
+.info{
+    display: flex;
+}
