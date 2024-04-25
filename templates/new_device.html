@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAIIS-pi-terminal</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="title">
+            <h1>Терминал учета выдачи оборудования</h1>
+            <span>Окно записи нового оборудования</span>
+        </div>
+        <div class="check-container">
+            <div class="check-elem">
+                <button>
+                    <span>Считать Штрихкод</span>
+                    <div class="img-container good"><img src="../static/img/OK.svg" alt=""></div>
+                    <div class="img-container error"><img src="../static/img/ERR.svg" alt=""></div>
+                    <div class="img-container waiting"><img src="../static/img/wait.svg" alt=""></div>
+                </button>
+                <div class="img-container info"><img src="../static/img/device.svg" alt="device"><span>info</span></div>
+            </div>
+            <div class="check-elem">
+                <button>
+                    <span>Считать новую метку</span>
+                    <div class="img-container good"><img src="../static/img/OK.svg" alt=""></div>
+                    <div class="img-container error"><img src="../static/img/ERR.svg" alt=""></div>
+                    <div class="img-container waiting"><img src="../static/img/wait.svg" alt=""></div>
+                </button>
+                <div class="img-container info"><img src="../static/img/device.svg" alt="device"><span>info</span></div>
+            </div>
+            <div class="check-elem">
+                <button>
+                    <span>Считать пропуск преподавателя</span>
+                    <div class="img-container good"><img src="../static/img/OK.svg" alt=""></div>
+                    <div class="img-container error"><img src="../static/img/ERR.svg" alt=""></div>
+                    <div class="img-container waiting"><img src="../static/img/wait.svg" alt=""></div>
+                </button>
+                <div class="img-container info"><img src="../static/img/user.svg" alt="user"><span>info</span></div>
+                
+            </div>
+            <div class="comment">
+                <textarea name="comment" id="comment" placeholder="Комментарий к оборудованию(если окно пустое, то будет выведена информация с метки, если здесь что-то написано, оно запишется в метку)"></textarea>
+            </div>
+        </div>
+        <div class="confirm-btn"><button>Взять/Сдать оборудование</button></div>
+    </div>
+</body>
+</html>
