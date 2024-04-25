@@ -99,3 +99,12 @@ body{
 .info{
     display: flex;
 }
+.comment textarea{
+    padding: 10px;
+    background-color: rgb(251, 241, 229);
+    border-radius: 10px;
+    border: none;
+    height:80px;
+    width:400px;
+    resize: none;
+}
