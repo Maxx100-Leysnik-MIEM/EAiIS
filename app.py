@@ -23,13 +23,13 @@ def new_device():
 
 @app.route('/get_nfc',  methods=['GET'])
 def get_nfc():
-    return "success"
+    pass
 
 @app.route('/get_rfid',  methods=['GET'])
 def get_rfid():
     pass
 
-@app.route('/write_nfc',  methods=['GET'])
+@app.route('/write_nfc',  methods=['POST'])
 def write_nfc():
     pass
 
