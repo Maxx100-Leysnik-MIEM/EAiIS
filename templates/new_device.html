@@ -14,29 +14,29 @@
         </div>
         <div class="check-container">
             <div class="check-elem">
-                <button>
+                <button onclick="read_barcode(this)">
                     <span>Считать Штрихкод</span>
-                    <div class="img-container good"><img src="../static/img/OK.svg" alt=""></div>
-                    <div class="img-container error"><img src="../static/img/ERR.svg" alt=""></div>
-                    <div class="img-container waiting"><img src="../static/img/wait.svg" alt=""></div>
+                    <div class="img-container good disabled"><img src="../static/img/OK.svg" alt=""></div>
+                    <div class="img-container error disabled"><img src="../static/img/ERR.svg" alt=""></div>
+                    <div class="img-container waiting disabled"><img src="../static/img/wait.svg" alt=""></div>
                 </button>
                 <div class="img-container info"><img src="../static/img/device.svg" alt="device"><span>info</span></div>
             </div>
             <div class="check-elem">
-                <button>
+                <button onclick="write_nfc(this)">
                     <span>Считать новую метку</span>
-                    <div class="img-container good"><img src="../static/img/OK.svg" alt=""></div>
-                    <div class="img-container error"><img src="../static/img/ERR.svg" alt=""></div>
-                    <div class="img-container waiting"><img src="../static/img/wait.svg" alt=""></div>
+                    <div class="img-container good disabled"><img src="../static/img/OK.svg" alt=""></div>
+                    <div class="img-container error disabled"><img src="../static/img/ERR.svg" alt=""></div>
+                    <div class="img-container waiting disabled"><img src="../static/img/wait.svg" alt=""></div>
                 </button>
                 <div class="img-container info"><img src="../static/img/device.svg" alt="device"><input name="serial_id" id="serial_id" type="text" placeholder="00000000000000"></div>
             </div>
             <div class="check-elem">
-                <button>
+                <button onclick="read_rfid_2(this)">
                     <span>Считать пропуск преподавателя</span>
-                    <div class="img-container good"><img src="../static/img/OK.svg" alt=""></div>
-                    <div class="img-container error"><img src="../static/img/ERR.svg" alt=""></div>
-                    <div class="img-container waiting"><img src="../static/img/wait.svg" alt=""></div>
+                    <div class="img-container good disabled"><img src="../static/img/OK.svg" alt=""></div>
+                    <div class="img-container error disabled"><img src="../static/img/ERR.svg" alt=""></div>
+                    <div class="img-container waiting disabled"><img src="../static/img/wait.svg" alt=""></div>
                 </button>
                 <div class="img-container info"><img src="../static/img/user.svg" alt="user"><span>info</span></div>
                 
@@ -45,7 +45,8 @@
                 <textarea name="comment" id="comment" placeholder="Комментарий к оборудованию"></textarea>
             </div>
         </div>
-        <div class="confirm-btn"><button>Взять/Сдать оборудование</button></div>
+        <div class="confirm-btn"><button id="new_device">Взять/Сдать оборудование</button></div>
     </div>
+    <script src="static/js/requests.js"></script>
 </body>
 </html>

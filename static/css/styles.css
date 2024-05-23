@@ -24,8 +24,6 @@ body{
 .title h1{
     color: rgb(251, 241, 229);
 }
-.wrapper .button{
-}
 .wrapper .rbutton a{
     display: inline-block;
     border-radius: 10px;
@@ -93,6 +91,8 @@ body{
     margin: 0;
 }
 .good, .waiting, .error{
+}
+.disabled{
     display: none;
 }
 .info{
