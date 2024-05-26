@@ -6,10 +6,14 @@ barcode_url  = "/get_barcode"
 new_request_url = "/make_new_request"
 new_device_url = "/write_new_device"
 
+let date = new Date();
+
 let json_request_new = {
-    nfc_id: null,
-    rfid_student: null,
-    rfid_phd: null
+    nfc_id : null,
+    rfid_student : null,
+    rfid_phd : null,
+    count : null,
+    planned_date : null 
 }
 
 let json_request_new_device = {
@@ -118,9 +122,14 @@ async function write_nfc(btn){
 };
 
 async function new_request(btn){
+    let count = document.getElementById("count").value;
+    let planned_date = document.getElementById("planned_date").value;
+    json_request_new.count = count;
+    json_request_new.planned_date = planned_date;
     if(json_request_new.nfc_id != null &&
         json_request_new.rfid_phd != null &&
-        json_request_new.rfid_student != null){
+        json_request_new.rfid_student != null &&
+        planned_date.value > date.toISOString().slice(0, 10)){
         let response = await fetch(new_request_url, {
             method: "post",
             body: JSON.stringify(json_request_new)
@@ -132,7 +141,7 @@ async function new_request(btn){
             alert("отказ в операции")
         }
     }else{
-        alert("Считайте все параметры");
+        alert("Проверьте введеные параметры");
     }
 };
 

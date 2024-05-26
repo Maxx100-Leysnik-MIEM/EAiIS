@@ -44,6 +44,8 @@
             <div class="comment">
                 <textarea name="comment" id="comment" placeholder="Комментарий к оборудованию"></textarea>
             </div>
+            <div class="date-holder"><span>Планируемая дата возврата: </span><input type="date" min="" name="planned_date" id="planned_date" required></div>
+            <div class="count-holder"><span>Количество: </span><input id="count" min="1" required name="count" type="number" placeholder="0"></div>
         </div>
         <div class="confirm-btn"><button id="new_request" onclick="new_request(this)">Взять/Сдать оборудование</button></div>
     </div>
