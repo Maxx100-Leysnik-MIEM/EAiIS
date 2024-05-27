@@ -2,6 +2,8 @@
 
 from mfrc522 import MFRC522
 import RPi.GPIO as GPIO
+import time
+from config import WAIT_TIME
   
 class CustomMFRC522:
 
@@ -17,9 +19,12 @@ class CustomMFRC522:
 
   def read(self):
       id, text = self.read_no_block()
-      while not id:
+      end_time = time.time() + WAIT_TIME
+      while not id and end_time >= time.time():
           id, text = self.read_no_block()
-      return id, text
+          if id:
+              return id, text
+      return -1, ""
 
   def read_id(self):
     id = self.read_id_no_block()
