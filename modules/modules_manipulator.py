@@ -6,7 +6,6 @@ import rdm6300
 from customMFRC522 import CustomMFRC522
 import config
 
-#TODO create custom MFRC522: exit while reading
 def readNFC():
     try:
         print("Start")
@@ -29,7 +28,7 @@ def scanBarcode():
     return res[-1]
 
 def readRFID():
-    reader = rdm6300.Reader('/dev/serial0') #/dev/serial0 or /dev/tty0
+    reader = rdm6300.Reader('/dev/serial0') #/dev/serial0 or /dev/tty0 or /dev/ttyAMA0 ot /dev/ttyACM0
     print("Please insert an RFID card")
     end_time = time.time() + config.WAIT_TIME
     while end_time >= time.time():
