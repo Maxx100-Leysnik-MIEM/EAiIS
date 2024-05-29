@@ -1,6 +1,7 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask, request
+from flask import render_template, Response
 from config import HOST, PORT
+from modules import modules_manipulator as modman
 import json
 
 app = Flask(__name__)
@@ -23,11 +24,24 @@ def new_device():
 
 @app.route('/get_nfc',  methods=['GET'])
 def get_nfc():
-    pass
+    id, text = modman.readNFC()
+    if id == -1:
+        return Response(
+            "Resd failed",
+            status=408
+        )
+    return text
 
 @app.route('/get_rfid',  methods=['GET'])
 def get_rfid():
-    pass
+    #TODO: claim required field
+    card = modman.readRFID()
+    if card == -1:
+        return Response(
+            "Read failed",
+            status=408
+        )
+    return card
 
 @app.route('/write_nfc',  methods=['POST'])
 def write_nfc():

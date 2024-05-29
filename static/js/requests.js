@@ -77,7 +77,6 @@ async function read_rfid_2(btn){
     }
 };
 
-//TODO: required to write smthng into nfc tag
 async function read_barcode(btn){
     let err = btn.getElementsByClassName("error")[0];
     let wait = btn.getElementsByClassName("waiting")[0];
@@ -96,6 +95,7 @@ async function read_barcode(btn){
     }
 };
 
+//TODO: required to write smthng into nfc tag
 async function write_nfc(btn){
     let err = btn.getElementsByClassName("error")[0];
     let wait = btn.getElementsByClassName("waiting")[0];
