@@ -65,9 +65,12 @@ class CustomMFRC522:
     
   def write(self, text):
       id, text_in = self.write_no_block(text)
-      while not id:
+      end_time = time.time() + WAIT_TIME
+      while not id and end_time >= time.time():
           id, text_in = self.write_no_block(text)
-      return id, text_in
+          if id:
+              return id, text_in
+      return -1, ""
 
   def write_no_block(self, text):
       (status, TagType) = self.READER.MFRC522_Request(self.READER.PICC_REQIDL)

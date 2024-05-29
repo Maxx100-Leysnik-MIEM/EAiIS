@@ -8,17 +8,25 @@ import config
 
 def readNFC():
     try:
-        print("Start")
         reader = CustomMFRC522(config.KEY, config.BLOCK_ADDRS)
         id, text = reader.read()
-        print("id:", id, "txt:", text)
         reader.READER.spi.close()
         return id, text
     except KeyboardInterrupt:
         reader.READER.spi.close()
         GPIO.cleanup()
         raise
-        
+
+def readNFC(id):
+    try:
+        mfrc = CustomMFRC522(config.KEY, config.BLOCK_ADDRS)
+        id, text = mfrc.write()
+        mfrc.READER.spi.close()
+        return id, text
+    except KeyboardInterrupt:
+        mfrc.READER.spi.close()
+        GPIO.cleanup()
+        raise
 
 def scanBarcode():
     scanner = BarcodeScanner("COM3")
