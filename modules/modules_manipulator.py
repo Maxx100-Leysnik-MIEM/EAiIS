@@ -17,7 +17,7 @@ def readNFC():
         GPIO.cleanup()
         raise
 
-def readNFC(id):
+def writeNFC(id):
     try:
         mfrc = CustomMFRC522(config.KEY, config.BLOCK_ADDRS)
         id, text = mfrc.write()
