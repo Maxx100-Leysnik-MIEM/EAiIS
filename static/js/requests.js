@@ -13,7 +13,8 @@ let json_request_new = {
     rfid_student : null,
     rfid_phd : null,
     count : null,
-    planned_date : null 
+    planned_date : null,
+    comment: null
 }
 
 let json_request_new_device = {
@@ -126,13 +127,18 @@ async function new_request(btn){
     let planned_date = document.getElementById("planned_date").value;
     json_request_new.count = count;
     json_request_new.planned_date = planned_date;
+    json_request_new.comment = document.getElementById("comment").value;
     if(json_request_new.nfc_id != null &&
         json_request_new.rfid_phd != null &&
         json_request_new.rfid_student != null &&
-        planned_date.value > date.toISOString().slice(0, 10)){
+        planned_date > date.toISOString().slice(0, 10)){
         let response = await fetch(new_request_url, {
             method: "post",
-            body: JSON.stringify(json_request_new)
+            body: JSON.stringify(json_request_new),
+            headers: {
+                'Accept': 'application/json',
+                "Content-Type": "application/json"
+            }
         });
         if (response.ok){
             let text = await response.text();
@@ -151,7 +157,11 @@ async function new_device(btn){
         json_request_new_device.barcode != null){
         let response = await fetch(new_device_url, {
             method: "post",
-            body: JSON.stringify(json_request_new_device)
+            body: JSON.stringify(json_request_new_device),
+            headers: {
+                'Accept': 'application/json',
+                "Content-Type": "application/json"
+            }
         });
         if (response.ok){
             alert("Оборудование занесено")
