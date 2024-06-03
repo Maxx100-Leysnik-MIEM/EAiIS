@@ -1,8 +1,8 @@
 from flask import Flask, request
 from flask import render_template, Response
 from config import HOST, PORT
-from modules import modules_manipulator as modman
-#from modules import modman
+#from modules import modules_manipulator as modman
+from modules import modman
 import json
 
 app = Flask(__name__)
@@ -42,11 +42,18 @@ def get_rfid():
             "Read failed",
             status=408
         )
-    return card
+    return card.value
 
 @app.route('/write_nfc',  methods=['POST'])
 def write_nfc():
-    pass
+    json = request.get_json()
+    result = modman.writeNFC(json["barcode"])
+    if result == -1:
+        return Response(
+            "Read failed",
+            status=408
+        )
+    return result    
 
 @app.route('/get_barcode',  methods=['GET'])
 def get_barcode():
@@ -58,7 +65,7 @@ def make_new():
 
 @app.route('/write_new_device',  methods=['POST'])
 def write_new_device():
-    pass
+    print(request.get_json())
 
 if __name__ == "__main__":
     app.run(HOST, PORT)
