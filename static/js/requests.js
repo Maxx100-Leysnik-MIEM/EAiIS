@@ -20,7 +20,8 @@ let json_request_new = {
 let json_request_new_device = {
     barcode: null,
     nfc_id: null,
-    rfid_phd: null
+    rfid_phd: null,
+    comment: null
 }
 
 async function read_nfc(btn){
@@ -157,6 +158,7 @@ async function new_device(btn){
     if(json_request_new_device.nfc_id != null &&
         json_request_new_device.rfid_phd != null &&
         json_request_new_device.barcode != null){
+            json_request_new_device.comment = document.getElementById("comment").value;
         let response = await fetch(new_device_url, {
             method: "post",
             body: JSON.stringify(json_request_new_device),
