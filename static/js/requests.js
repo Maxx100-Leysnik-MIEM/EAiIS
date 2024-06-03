@@ -90,7 +90,7 @@ async function read_barcode(btn){
     if (response.ok){
         ok.classList.remove("disabled");
         let text = await response.text();
-        json_request_new_device.barcode = text;
+        document.getElementById("serial_id").value = text;
     }else{
         err.classList.remove("disabled");
     }
@@ -103,7 +103,9 @@ async function write_nfc(btn){
     let ok = btn.getElementsByClassName("good")[0];
     ok.classList.add("disabled");
     err.classList.add("disabled");
-    if(json_request_new_device.barcode != null){
+    let input_id = document.getElementById("serial_id").value;
+    if(input_id != ""){
+        json_request_new_device.barcode = input_id;
         wait.classList.remove("disabled");
         let response = await fetch(nfc_write_url, {
             method: "post",
