@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask import render_template, Response
 from config import HOST, PORT
 from modules import modules_manipulator as modman
+#from modules import modman
 import json
 
 app = Flask(__name__)
@@ -27,7 +28,7 @@ def get_nfc():
     id, text = modman.readNFC()
     if id == -1:
         return Response(
-            "Resd failed",
+            "Read failed",
             status=408
         )
     return text
