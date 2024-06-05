@@ -110,7 +110,11 @@ async function write_nfc(btn){
         wait.classList.remove("disabled");
         let response = await fetch(nfc_write_url, {
             method: "post",
-            body: JSON.stringify(json_request_new_device)
+            body: JSON.stringify(json_request_new_device),
+            headers: {
+                'Accept': 'application/json',
+                "Content-Type": "application/json"
+            }
         });
         wait.classList.add("disabled");
         if (response.ok){
