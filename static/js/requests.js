@@ -159,6 +159,7 @@ async function new_request(btn){
 };
 
 async function new_device(btn){
+    json_request_new_device.barcode = document.getElementById("serial_id").value;
     if(json_request_new_device.nfc_id != null &&
         json_request_new_device.rfid_phd != null &&
         json_request_new_device.barcode != null){
