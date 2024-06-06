@@ -10,3 +10,5 @@ WAIT_TIME = 20
 # FLASK
 HOST = "localhost"
 PORT = 8080
+
+DEBUG = True

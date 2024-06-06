@@ -1,8 +1,12 @@
+import os.path
+
 from flask import Flask, request
 from flask import render_template, Response
-from config import HOST, PORT
-# from modules import modules_manipulator as modman
-from modules import modman
+from config import HOST, PORT, DEBUG
+if DEBUG:
+    from modules import modman
+else:
+    from modules import modules_manipulator as modman
 from openapi_client import db
 
 app = Flask(__name__)
@@ -47,6 +51,8 @@ def get_rfid():
             "Read failed",
             status=408
         )
+    if DEBUG:
+        return "1111"
     return card.value
 
 
@@ -72,15 +78,15 @@ def make_new():
     _json = request.get_json()
     response = db.create_request(
         json={
-            "items": [{"hardware": _json["nfc_id"],
-                       "room": None,
-                       "count": _json["count"]}],
+            "items": [{"hardware": int(_json["nfc_id"]),
+                       "room": 1,
+                       "count": int(_json["count"])}],
             "comment": _json["comment"],
-            "planned_return_date": _json["planned_date"]
+            "planned_return_date": f"{_json["planned_date"]}T23:59:59.999Z"
         })
     if response.status_code != 201:
         return Response(response, status=response.status_code)
-    _id = response["id"]
+    _id = response.json()["id"]
     response = db.take_item(
         _id,
         json={
@@ -88,7 +94,7 @@ def make_new():
             "issuer_card": _json["rfid_phd"]
         })
     if response.status_code != 200:
-        # TODO: Если оборудование не взяли, то надо удалить запрос
+        db.cancel_request(_id)
         return Response(response, status=response.status_code)
     return "Successful"
 

@@ -1,8 +1,15 @@
 import requests
 import os
 from dotenv import load_dotenv
+import logging
 
 load_dotenv()
+handler = logging.FileHandler("api.log", mode="a")
+handler.setFormatter(logging.Formatter("%(levelname)s %(asctime)s %(message)s"))
+
+logger = logging.getLogger("api.log")
+logger.setLevel(logging.INFO)
+logger.addHandler(handler)
 
 
 class DbSession:
@@ -10,7 +17,8 @@ class DbSession:
         self.JWT_TOKEN = os.getenv("JWT_TOKEN")
         self.URL = os.getenv("URL")
 
-    def resp(self, link: str, method: str = "GET", headers=None, params=None, data=None) -> requests.models.Response:
+    def resp(self, link: str, method: str = "GET", headers=None, params=None, data=None, json=None) \
+            -> requests.models.Response:
         if headers is None:
             headers = {'Authorization': f'Bearer {self.JWT_TOKEN}'}
         else:
@@ -18,14 +26,13 @@ class DbSession:
         resp = None
         match method:
             case "GET":
-                resp = requests.get(f"{self.URL}/{link}",
-                                    headers=headers, params=params, data=data)
+                resp = requests.get(f"{self.URL}/{link}", headers=headers, params=params, data=data, json=json)
             case "POST":
-                resp = requests.post(f"{self.URL}/{link}",
-                                     headers=headers, params=params, data=data)
+                resp = requests.post(f"{self.URL}/{link}", headers=headers, params=params, data=data, json=json)
             case "PATCH":
                 resp = requests.patch(f"{self.URL}/{link}",
                                       headers=headers, params=params, data=data)
+        logger.info(f"{self.URL}/{link}:{method} {resp.text} Json:{json}")
         return resp
 
     def whoami(self):  # get info about your token
@@ -36,14 +43,14 @@ class DbSession:
             return self.resp("request")
         return self.resp(f"request/{str(_id)}")
 
-    def create_request(self):
-        return self.resp("request", method="POST")
+    def create_request(self, json):
+        return self.resp("request", method="POST", json=json)
 
     def update_request(self, _id: int):
         return self.resp(f"request/{str(_id)}", method="PATCH")
 
-    def take_item(self, _id: int):
-        return self.resp(f"request/{str(_id)}/take", method="POST")
+    def take_item(self, _id: int, json):
+        return self.resp(f"request/{str(_id)}/take", method="POST", json=json)
 
     def return_item(self, _id: int):
         return self.resp(f"request/{str(_id)}/complete", method="POST")
@@ -122,3 +129,15 @@ class DbSession:
 
 
 db = DbSession()
+if __name__ == "__main__":
+    db.resp("hardware", method="POST", json={"name": "Testing", "type": 4,"specifications":{"name":"TEST","type":"99"}})
+
+    while True:
+        try:
+            print(eval(input()))
+        except Exception as e:
+            print(e)
+
+"""
+db.resp(method="POST", json="name":"Testing","type":99,"image_link":"link","specifications":{"name":"TEST","type":"99"}})
+"""
