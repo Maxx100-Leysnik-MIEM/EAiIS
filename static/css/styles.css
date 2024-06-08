@@ -121,3 +121,17 @@ input{
 .count-holder input{
     width: 30px;
 }
+.choise-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 400px;
+    transition: all 0.3s;
+}
+.choise-wrapper span:hover{
+    color:rgb(187, 180, 170);
+    transition: all 0.3s;
+}
+.selected{
+    border-bottom: 1px solid antiquewhite;
+}

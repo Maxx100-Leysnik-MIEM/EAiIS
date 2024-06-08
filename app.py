@@ -8,6 +8,10 @@ if DEBUG:
 else:
     from modules import modules_manipulator as modman
 from openapi_client import db
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -51,8 +55,6 @@ def get_rfid():
             "Read failed",
             status=408
         )
-    if DEBUG:
-        return "1111"
     return card.value
 
 
@@ -76,27 +78,62 @@ def get_barcode():
 @app.route('/make_new_request',  methods=['POST'])
 def make_new():
     _json = request.get_json()
-    response = db.create_request(
-        json={
-            "items": [{"hardware": int(_json["nfc_id"]),
-                       "room": 1,
-                       "count": int(_json["count"])}],
-            "comment": _json["comment"],
-            "planned_return_date": f"{_json["planned_date"]}T23:59:59.999Z"
-        })
-    if response.status_code != 201:
-        return Response(response, status=response.status_code)
-    _id = response.json()["id"]
-    response = db.take_item(
-        _id,
-        json={
-            "user_card": _json["rfid_student"],
-            "issuer_card": _json["rfid_phd"]
-        })
-    if response.status_code != 200:
-        db.cancel_request(_id)
-        return Response(response, status=response.status_code)
-    return "Successful"
+    if _json["action"] == "take":
+        response = db.create_request(
+            json={
+                "items": [{"hardware": int(_json["nfc_id"]),
+                           "room": 1,
+                           "count": int(_json["count"])}],
+                "comment": _json["comment"],
+                "planned_return_date": f"{_json["planned_date"]}T23:59:59.999999Z"
+            })
+        if response.status_code != 201:
+            return Response(response, status=response.status_code)
+        _id = response.json()["id"]
+        if DEBUG:
+            _json["rfid_student"] = os.getenv("USER_CARD_DEBUG")
+            _json["rfid_phd"] = os.getenv("ISSUER_CARD_DEBUG")
+        response = db.take_item(
+            _id,
+            json={
+                "user_card": _json["rfid_student"],
+                "issuer_card": _json["rfid_phd"]
+            })
+        if response.status_code != 200:
+            db.cancel_request(_id)
+            return Response(response, status=response.status_code)
+        return "Successful"
+    else:
+        if DEBUG:
+            _json["rfid_student"] = os.getenv("USER_CARD_DEBUG")
+            _json["rfid_phd"] = os.getenv("ISSUER_CARD_DEBUG")
+        user_id = -1
+        for i in db.get_user().json()["result"]:
+            if i["card_id"] == _json["rfid_student"]:
+                user_id = i["id"]
+                break
+        if user_id == -1:
+            return "User not found"
+        request_id = -1
+        for i in db.get_requests().json()["result"]:
+            if user_id == i["user"] and i["items"][0]["hardware"] == int(_json["nfc_id"]):
+                request_id = i["id"]
+                break
+        if request_id == -1:
+            return "Request not found"
+        response = db.return_items(request_id)
+        if response.status_code != 200:
+            return Response(response, status=response.status_code)
+        response = db.complete_request(
+            request_id,
+            json={
+                "user_card": _json["rfid_student"],
+                "issuer_card": _json["rfid_phd"]
+            }
+        )
+        if response.status_code != 200:
+            return Response(response, status=response.status_code)
+        return "Successful"
 
 
 @app.route('/write_new_device',  methods=['POST'])

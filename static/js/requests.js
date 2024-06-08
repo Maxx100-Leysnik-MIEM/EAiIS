@@ -6,6 +6,9 @@ barcode_url  = "/get_barcode"
 new_request_url = "/make_new_request"
 new_device_url = "/write_new_device"
 
+let take_span =  document.getElementById("take");
+let return_span =  document.getElementById("return");
+
 let date = new Date();
 
 let json_request_new = {
@@ -14,7 +17,8 @@ let json_request_new = {
     rfid_phd : null,
     count : null,
     planned_date : null,
-    comment: null
+    comment: null,
+    action: null
 }
 
 let json_request_new_device = {
@@ -23,6 +27,22 @@ let json_request_new_device = {
     rfid_phd: null,
     comment: null
 }
+
+take_span.addEventListener('click', (event) =>{
+    json_request_new.action = "take";
+    return_span.classList.remove("selected");
+    take_span.classList.add("selected");
+});
+
+return_span.addEventListener('click', (event) =>{
+    json_request_new.action = "return";
+    take_span.classList.remove("selected");
+    return_span.classList.add("selected");
+});
+
+window.addEventListener("load", () => {
+    take_span.click();
+});
 
 async function read_nfc(btn){
     let err = btn.getElementsByClassName("error")[0];
@@ -110,7 +130,11 @@ async function write_nfc(btn){
         wait.classList.remove("disabled");
         let response = await fetch(nfc_write_url, {
             method: "post",
-            body: JSON.stringify(json_request_new_device)
+            body: JSON.stringify(json_request_new_device),
+            headers: {
+                'Accept': 'application/json',
+                "Content-Type": "application/json"
+            }
         });
         wait.classList.add("disabled");
         if (response.ok){
@@ -134,7 +158,7 @@ async function new_request(btn){
     if(json_request_new.nfc_id != null &&
         json_request_new.rfid_phd != null &&
         json_request_new.rfid_student != null &&
-        planned_date > date.toISOString().slice(0, 10)){
+        (planned_date > date.toISOString().slice(0, 10) || json_request_new.action == "return")){
         let response = await fetch(new_request_url, {
             method: "post",
             body: JSON.stringify(json_request_new),
@@ -143,11 +167,11 @@ async function new_request(btn){
                 "Content-Type": "application/json"
             }
         });
-        if (response.ok){
+        if (response.status != 500){
             let text = await response.text();
-            alert("Оборудование " + text)
-        }else{
-            alert("отказ в операции")
+            alert(text);
+        } else{
+            alert("Ошибка сервера");
         }
     }else{
         alert("Проверьте введеные параметры");
@@ -155,6 +179,7 @@ async function new_request(btn){
 };
 
 async function new_device(btn){
+    json_request_new_device.barcode = document.getElementById("serial_id").value;
     if(json_request_new_device.nfc_id != null &&
         json_request_new_device.rfid_phd != null &&
         json_request_new_device.barcode != null){
@@ -167,10 +192,11 @@ async function new_device(btn){
                 "Content-Type": "application/json"
             }
         });
-        if (response.ok){
-            alert("Оборудование занесено")
-        }else{
-            alert("отказ в операции")
+        if (response.status != 500){
+            let text = await response.text();
+            alert(text);
+        } else{
+            alert("Ошибка сервера");
         }
     }else{
         alert("Считайте все параметры");
