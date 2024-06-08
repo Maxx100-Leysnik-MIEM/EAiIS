@@ -158,7 +158,7 @@ async function new_request(btn){
     if(json_request_new.nfc_id != null &&
         json_request_new.rfid_phd != null &&
         json_request_new.rfid_student != null &&
-        planned_date > date.toISOString().slice(0, 10)){
+        (planned_date > date.toISOString().slice(0, 10) || json_request_new.action == "return")){
         let response = await fetch(new_request_url, {
             method: "post",
             body: JSON.stringify(json_request_new),
