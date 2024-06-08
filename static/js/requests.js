@@ -147,11 +147,11 @@ async function new_request(btn){
                 "Content-Type": "application/json"
             }
         });
-        if (response.ok){
+        if (response.status != 500){
             let text = await response.text();
-            alert("Оборудование " + text)
-        }else{
-            alert("отказ в операции")
+            alert(text);
+        } else{
+            alert("Ошибка сервера");
         }
     }else{
         alert("Проверьте введеные параметры");
@@ -172,10 +172,11 @@ async function new_device(btn){
                 "Content-Type": "application/json"
             }
         });
-        if (response.ok){
-            alert("Оборудование занесено")
-        }else{
-            alert("отказ в операции")
+        if (response.status != 500){
+            let text = await response.text();
+            alert(text);
+        } else{
+            alert("Ошибка сервера");
         }
     }else{
         alert("Считайте все параметры");
