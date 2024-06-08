@@ -6,6 +6,9 @@ barcode_url  = "/get_barcode"
 new_request_url = "/make_new_request"
 new_device_url = "/write_new_device"
 
+let take_span =  document.getElementById("take");
+let return_span =  document.getElementById("return");
+
 let date = new Date();
 
 let json_request_new = {
@@ -14,7 +17,8 @@ let json_request_new = {
     rfid_phd : null,
     count : null,
     planned_date : null,
-    comment: null
+    comment: null,
+    action: null
 }
 
 let json_request_new_device = {
@@ -23,6 +27,22 @@ let json_request_new_device = {
     rfid_phd: null,
     comment: null
 }
+
+take_span.addEventListener('click', (event) =>{
+    json_request_new.action = "take";
+    return_span.classList.remove("selected");
+    take_span.classList.add("selected");
+});
+
+return_span.addEventListener('click', (event) =>{
+    json_request_new.action = "return";
+    take_span.classList.remove("selected");
+    return_span.classList.add("selected");
+});
+
+window.addEventListener("load", () => {
+    take_span.click();
+});
 
 async function read_nfc(btn){
     let err = btn.getElementsByClassName("error")[0];
