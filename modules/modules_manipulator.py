@@ -1,5 +1,3 @@
-import time
-
 import RPi.GPIO as GPIO
 from ws_barcode_scanner import BarcodeScanner
 import rdm6300
@@ -37,14 +35,12 @@ def scanBarcode():
 
 def readRFID():
     reader = rdm6300.Reader('/dev/ttyAMA0') #/dev/serial0 or /dev/tty0 or /dev/ttyAMA0 ot /dev/ttyACM0
-    print("Please insert an RFID card")
-    end_time = time.time() + config.WAIT_TIME
-    while end_time >= time.time():
-        card = reader.read()
-        if card:
-            print(f"[{card.value}] read card {card}")
-            return card
-    return -1
+    card = reader.read(config.WAIT_TIME)
+    if card:
+        print(f"[{card.value}] read card {card}")
+        return card
+    else:
+        return -1
     
 if __name__ == "__main__":
     while True:
