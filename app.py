@@ -67,7 +67,7 @@ def write_nfc():
             "Read failed",
             status=408
         )
-    return result
+    return str(result)
 
 
 @app.route('/get_barcode',  methods=['GET'])
@@ -85,7 +85,7 @@ def make_new():
                            "room": 1,
                            "count": int(_json["count"])}],
                 "comment": _json["comment"],
-                "planned_return_date": f"{_json["planned_date"]}T23:59:59.999999Z"
+                "planned_return_date": f"{_json['planned_date']}T23:59:59.999999Z"
             })
         if response.status_code != 201:
             return Response(response, status=response.status_code)

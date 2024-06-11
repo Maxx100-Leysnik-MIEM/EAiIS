@@ -17,10 +17,10 @@ def readNFC():
         GPIO.cleanup()
         raise
 
-def writeNFC(id):
+def writeNFC(id_):
     try:
         mfrc = CustomMFRC522(config.KEY, config.BLOCK_ADDRS)
-        id, text = mfrc.write()
+        id, text = mfrc.write(id_)
         mfrc.READER.spi.close()
         return id, text
     except KeyboardInterrupt:
@@ -36,7 +36,7 @@ def scanBarcode():
     return res[-1]
 
 def readRFID():
-    reader = rdm6300.Reader('/dev/serial0') #/dev/serial0 or /dev/tty0 or /dev/ttyAMA0 ot /dev/ttyACM0
+    reader = rdm6300.Reader('/dev/ttyAMA0') #/dev/serial0 or /dev/tty0 or /dev/ttyAMA0 ot /dev/ttyACM0
     print("Please insert an RFID card")
     end_time = time.time() + config.WAIT_TIME
     while end_time >= time.time():
@@ -45,3 +45,7 @@ def readRFID():
             print(f"[{card.value}] read card {card}")
             return card
     return -1
+    
+if __name__ == "__main__":
+    while True:
+        print(readRFID())

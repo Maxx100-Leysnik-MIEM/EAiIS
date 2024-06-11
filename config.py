@@ -11,4 +11,4 @@ WAIT_TIME = 20
 HOST = "localhost"
 PORT = 8080
 
-DEBUG = True
+DEBUG = False

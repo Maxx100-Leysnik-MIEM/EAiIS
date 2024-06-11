@@ -51,7 +51,7 @@ class DbSession:
 
     def take_item(self, _id: int, json):
         return self.resp(
-            f"request/{_id}/take?user_card={json["user_card"]}&issuer_card={json["issuer_card"]}",
+            f"request/{_id}/take?user_card={json['user_card']}&issuer_card={json['issuer_card']}",
             method="POST",
             json=json
         )
@@ -61,7 +61,7 @@ class DbSession:
 
     def complete_request(self, _id: int, json):
         return self.resp(
-            f"request/{_id}/complete?user_card={json["user_card"]}&issuer_card={json["issuer_card"]}",
+            f"request/{_id}/complete?user_card={json['user_card']}&issuer_card={json['issuer_card']}",
             method="POST",
             json=json
         )
