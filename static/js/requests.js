@@ -57,6 +57,7 @@ async function read_nfc(btn){
         ok.classList.remove("disabled")
         let text = await response.text();
         json_request_new.nfc_id = text;
+        document.getElementById("device").textContent = text;
     }else{
         err.classList.remove("disabled")
     }
@@ -75,6 +76,7 @@ async function read_rfid(btn){
         ok.classList.remove("disabled")
         let text = await response.text();
         json_request_new.rfid_student = text;
+        document.getElementById("rfid-1").textContent = text;
     }else{
         err.classList.remove("disabled")
     }
@@ -94,6 +96,7 @@ async function read_rfid_2(btn){
         let text = await response.text();
         json_request_new.rfid_phd = text;
         json_request_new_device.rfid_phd = text;
+        document.getElementById("rfid-2").textContent = text;
     }else{
         err.classList.remove("disabled");
     }
@@ -117,7 +120,6 @@ async function read_barcode(btn){
     }
 };
 
-//TODO: required to write smthng into nfc tag
 async function write_nfc(btn){
     let err = btn.getElementsByClassName("error")[0];
     let wait = btn.getElementsByClassName("waiting")[0];
@@ -141,6 +143,7 @@ async function write_nfc(btn){
             ok.classList.remove("disabled");
             let text = await response.text();
             json_request_new_device.nfc_id = text;
+            document.getElementById("device").textContent = text;
         }else{
             err.classList.remove("disabled");
         }
