@@ -1,8 +1,8 @@
-import RPi.GPIO as GPIO
-from ws_barcode_scanner import BarcodeScanner
-import rdm6300
-from customMFRC522 import CustomMFRC522
-import config
+# import RPi.GPIO as GPIO
+# from ws_barcode_scanner import BarcodeScanner
+# import rdm6300
+from modules.customMFRC522 import CustomMFRC522
+from modules import config
 
 def readNFC():
     try:

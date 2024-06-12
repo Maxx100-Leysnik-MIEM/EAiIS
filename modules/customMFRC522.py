@@ -3,7 +3,7 @@
 from mfrc522 import MFRC522
 import RPi.GPIO as GPIO
 import time
-from config import WAIT_TIME
+from modules.config import WAIT_TIME
   
 class CustomMFRC522:
 
